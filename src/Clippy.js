@@ -1,22 +1,24 @@
 // @flow
-import React, {Component} from 'react';
+import React from 'react';
 import Draggable from 'react-draggable';
 
-const Clippy = () => <Draggable
-  defaultPosition={{x: 650, y: 500}}
+const Clippy = ({defaultPosition, isMobile, zIndex, bumpZIndex}) => <div
+  style={{
+    ...styles.clippy,
+    ...isMobile && styles.mobileClippy,
+    zIndex,
+  }}
+  onClick={bumpZIndex}
 >
-  <div style={styles.clippyWrapper}>
-    <div style={styles.clippy}>
-    <div style={styles.speechBubble}>
-      <p>It looks like this decision has been going on for awhile now!</p>
-      <p>Have you tried killing the process?</p>
-      <div style={styles.caret} />
-    </div>
+  <div style={styles.speechBubble}>
+    <p>It looks like this decision has been going on for awhile now!</p>
+    <p>Have you tried killing the process?</p>
+    <div style={styles.caret} />
   </div>
-  </div>
-</Draggable>;
+</div>;
 
 const CLIPPY_SIZE = 125;
+const MOBILE_CLIPPY_SIZE = 80;
 
 const styles = {
   clippy: {
@@ -24,14 +26,20 @@ const styles = {
     backgroundSize: CLIPPY_SIZE,
     height: CLIPPY_SIZE,
     width: CLIPPY_SIZE,
-    position: 'relative',
-    zIndex: 99,
+    position: 'absolute',
+    bottom: 60,
+    right: 40,
+  },
+  mobileClippy: {
+    backgroundSize: MOBILE_CLIPPY_SIZE,
+    height: MOBILE_CLIPPY_SIZE,
+    width: MOBILE_CLIPPY_SIZE,
   },
   speechBubble: {
     position: 'absolute',
-    top: '-130%',
-    left: '-60%',
-    maxWidth: 150,
+    bottom: '110%',
+    right: '50%',
+    width: 150,
     paddingLeft: 15,
     paddingRight: 15,
     backgroundColor: 'hsl(60, 100%, 89%)',

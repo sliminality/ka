@@ -8,6 +8,11 @@ class TaskManager extends Component {
     bumpZIndex: () => void,
     acceptOffer: () => void,
     offerAccepted: bool,
+    defaultPosition: {
+      x: number,
+      y: number,
+    },
+    isMobile: bool,
   };
 
   renderTableHead() {
@@ -108,34 +113,50 @@ class TaskManager extends Component {
   }
 
   render() {
+    const {defaultPosition, isMobile} = this.props;
     return (
       <Window
         title="Windows Task Manager"
         showMenuBar={true}
-        defaultPosition={{x: 120, y: 20}}
+        defaultPosition={defaultPosition}
         {...this.props}
       >
         <div
-          className="bg-white inset"
-          style={styles.taskList}
+          style={{
+            ...styles.contents,
+            ...isMobile && styles.mobileContents,
+          }}
         >
-          <table>
-            {this.renderTableHead()}
-            {this.renderTableBody()}
-          </table>
+          <div
+            className="bg-white inset"
+            style={styles.taskList}
+          >
+            <table>
+              {this.renderTableHead()}
+              {this.renderTableBody()}
+            </table>
+          </div>
+          {this.renderButtons()}
+          {this.renderFooter()}
         </div>
-        {this.renderButtons()}
-        {this.renderFooter()}
       </Window>
     );
   }
 }
 
 const styles = {
+  contents: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 250,
+  },
+  mobileContents: {
+    minHeight: 200,
+    fontSize: 9,
+  },
   taskList: {
     margin: 10,
     flex: 1,
-    minHeight: 250,
   },
   headingCell: {
     width: '100%',
@@ -147,7 +168,7 @@ const styles = {
     alignItems: 'center',
   },
   statusCol: {
-    minWidth: 150,
+    minWidth: 120,
   },
 
   selectedTask: {

@@ -11,6 +11,7 @@ type Props = {
     x: number,
     y: number,
   },
+  isMobile: bool,
 };
 
 const TitleButton = ({icon, text}) => <button
@@ -35,7 +36,7 @@ class Window extends Component {
           background: `url(${process.env.PUBLIC_URL}/icons/${icon}) no-repeat center center`,
           minWidth: 20,
         }} />}
-        <h3 style={styles.title}>{title}</h3>
+        <div style={styles.title}>{title}</div>
         <div style={styles.titleButtons}>
           <TitleButton icon="minimize.png" />
           <TitleButton icon="maximize.png" />
@@ -62,7 +63,7 @@ class Window extends Component {
   render() {
     const {
       title, showMenuBar, zIndex, bumpZIndex,
-      defaultPosition,
+      defaultPosition, isMobile,
       style: customStyles,
     } = this.props;
 
@@ -75,6 +76,7 @@ class Window extends Component {
           className="outset bg-chrome"
           style={{
             ...styles.window,
+            ...isMobile && styles.mobileWindow,
             ...customStyles,
             zIndex,
           }}
@@ -94,12 +96,15 @@ const styles = {
     flexDirection: 'column',
     padding: 2,
     color: 'black',
-    width: 500,
+    maxWidth: 500,
     borderTop: 'var(--border-grey)',
     borderLeft: 'var(--border-grey)',
 
     // For z-index switching to work
     position: 'absolute',
+  },
+  mobileWindow: {
+    maxWidth: 350,
   },
   titleBar: {
     width: '100%',

@@ -15,7 +15,7 @@ class Desktop extends Component {
       <div style={styles.desktop}>
         <MyComputer top={10} left={10} />
         <MyDocuments top={100} left={10} />
-        <RecycleBin bottom={60} right={10} />
+        <RecycleBin bottom={60} left={10} />
         {this.props.children}
         <Taskbar />
       </div>

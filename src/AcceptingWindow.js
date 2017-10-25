@@ -6,6 +6,10 @@ class AcceptingWindow extends React.Component {
   props: {
     zIndex: number,
     bumpZIndex: () => void,
+    defaultPosition: {
+      x: number,
+      y: number,
+    },
   };
 
   redirect() {
@@ -13,10 +17,11 @@ class AcceptingWindow extends React.Component {
   }
 
   render() {
+    const {defaultPosition} = this.props;
     return (
       <Window
         title="The Verdict"
-        defaultPosition={{x: 300, y: 300}}
+        defaultPosition={defaultPosition}
         style={{
           width: 350,
         }}
@@ -46,7 +51,7 @@ const ICON_SIZE = 50;
 
 const styles = {
   contents: {
-    width: '100%',
+    width: 300,
     padding: '15px 25px',
     display: 'flex',
     flexDirection: 'column',

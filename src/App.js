@@ -18,11 +18,23 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    this.measureWindowSize();
+  }
+
 	measureWindowSize() {
     this.windowSize = {
-      height: window.innerHeight,
-      width: window.innerWidth,
+      height: window.outerHeight,
+      width: window.outerWidth,
     };
+  }
+
+  isMobileIsh() {
+    if (!this.windowSize) {
+      this.measureWindowSize();
+    }
+    const {height, width} = this.windowSize;
+    return (width < 500 || height < 600);
   }
 
   bumpZIndex = (id) => () => {
@@ -62,6 +74,22 @@ class App extends Component {
 
   render() {
     const {zIndices, offerAccepted} = this.state;
+    const positionsForDesktop = {
+      taskManager: {x: 120, y: 20},
+      decidingWindow: {x: 40, y: 370},
+      acceptingWindow: {x: 300, y: 300},
+      clippy: {x: 650, y: 500},
+    };
+    const positionsForMobile = {
+      taskManager: {x: 20, y: 20},
+      decidingWindow: {x: 5, y: 300},
+      acceptingWindow: {x: 15, y: 200},
+      clippy: {x: 200, y: 500},
+    };
+    const isMobile = this.isMobileIsh();
+    const positions = isMobile
+      ? positionsForMobile
+      : positionsForDesktop;
     return (
       <Desktop>
 				{offerAccepted && this.renderConfetti()}
@@ -70,23 +98,31 @@ class App extends Component {
           bumpZIndex={this.bumpZIndex(0)}
           acceptOffer={this.acceptOffer}
           offerAccepted={offerAccepted}
+          defaultPosition={positions.taskManager}
+          isMobile={isMobile}
         />
         <DecidingWindow
           zIndex={zIndices[1] || 0}
           bumpZIndex={this.bumpZIndex(1)}
           offerAccepted={offerAccepted}
+          defaultPosition={positions.decidingWindow}
+          isMobile={isMobile}
         />
         {offerAccepted && <AcceptingWindow
           zIndex={zIndices[2] || 999999}
           bumpZIndex={this.bumpZIndex(2)}
+          defaultPosition={positions.acceptingWindow}
+          isMobile={isMobile}
         />}
-        {!offerAccepted && <Clippy/>}
+        {!offerAccepted && <Clippy
+          zIndex={zIndices[3] || 0}
+          bumpZIndex={this.bumpZIndex(3)}
+          defaultPosition={positions.clippy}
+          isMobile={isMobile}
+        />}
       </Desktop>
     );
   }
 }
-
-const styles = {
-};
 
 export default App;

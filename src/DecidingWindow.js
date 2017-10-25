@@ -17,6 +17,11 @@ class DecidingWindow extends Component {
     zIndex: number,
     bumpZIndex: () => void,
     offerAccepted: bool,
+    defaultPosition: {
+      x: number,
+      y: number,
+    },
+    isMobile: bool,
   };
 
   constructor(props) {
@@ -47,7 +52,7 @@ class DecidingWindow extends Component {
   };
 
   render() {
-    const {offerAccepted} = this.props;
+    const {offerAccepted, defaultPosition, isMobile} = this.props;
     const {currentStatus} = this.state;
     const status = offerAccepted
       ? '0!!!!!!!!!! \n(so, 1)'
@@ -58,11 +63,12 @@ class DecidingWindow extends Component {
 
     return <Window
       title={title}
-      defaultPosition={{x: 270, y: 170}}
+      defaultPosition={defaultPosition}
       {...this.props}
     >
       <div style={{
         ...styles.contents,
+        ...isMobile && styles.narrow,
         ...offerAccepted && styles.defaultCursor,
       }}>
         Estimated time left: {status}
@@ -86,6 +92,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  narrow: {
+    width: '100%',
   },
   defaultCursor: {
     cursor: 'var(--cursor-default)',
