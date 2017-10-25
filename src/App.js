@@ -27,13 +27,10 @@ class App extends Component {
       height: window.outerHeight,
       width: window.outerWidth,
     };
+    return this.windowSize;
   }
 
-  isMobileIsh() {
-    if (!this.windowSize) {
-      this.measureWindowSize();
-    }
-    const {height, width} = this.windowSize;
+  isMobileIsh({height, width}) {
     return (width < 500 || height < 600);
   }
 
@@ -86,7 +83,8 @@ class App extends Component {
       acceptingWindow: {x: 15, y: 200},
       clippy: {x: 200, y: 500},
     };
-    const isMobile = this.isMobileIsh();
+    const windowSize = this.measureWindowSize();
+    const isMobile = this.isMobileIsh(windowSize);
     const positions = isMobile
       ? positionsForMobile
       : positionsForDesktop;
@@ -112,7 +110,10 @@ class App extends Component {
         {offerAccepted && <AcceptingWindow
           zIndex={zIndices[2] || 999999}
           bumpZIndex={this.bumpZIndex(2)}
-          defaultPosition={positions.acceptingWindow}
+          defaultPosition={{
+            x: (windowSize.width / 2) - (350 / 2),
+            y: (windowSize.height / 2) - 200,
+          }}
           isMobile={isMobile}
         />}
         {!offerAccepted && <Clippy
