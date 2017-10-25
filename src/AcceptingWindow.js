@@ -17,7 +17,7 @@ class AcceptingWindow extends React.Component {
   }
 
   render() {
-    const {defaultPosition} = this.props;
+    const { defaultPosition } = this.props;
     return (
       <Window
         title="The Verdict"
@@ -38,7 +38,7 @@ class AcceptingWindow extends React.Component {
               style={styles.confirmButton}
               onClick={this.redirect}
             >
-              🔥🔥🔥
+              Onward! 🔥🔥🔥
             </button>
           </div>
         </div>
@@ -46,9 +46,7 @@ class AcceptingWindow extends React.Component {
     );
   }
 }
-
 const ICON_SIZE = 50;
-
 const styles = {
   contents: {
     width: 300,
@@ -60,7 +58,8 @@ const styles = {
   icon: {
     minWidth: ICON_SIZE,
     minHeight: ICON_SIZE,
-    background: `url("${process.env.PUBLIC_URL}/icons/info.png") right top no-repeat`,
+    background: `url("${process.env
+      .PUBLIC_URL}/icons/info.png") right top no-repeat`,
     backgroundSize: ICON_SIZE,
     marginRight: 20,
   },
@@ -78,5 +77,4 @@ const styles = {
     width: 150,
   },
 };
-
 export default AcceptingWindow;
