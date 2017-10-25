@@ -71,20 +71,23 @@ class App extends Component {
 
   render() {
     const {zIndices, offerAccepted} = this.state;
+    const windowSize = this.measureWindowSize();
+    const isMobile = this.isMobileIsh(windowSize);
     const positionsForDesktop = {
       taskManager: {x: 120, y: 20},
       decidingWindow: {x: 40, y: 370},
-      acceptingWindow: {x: 300, y: 300},
+      acceptingWindow: {
+        x: (windowSize.width / 2) - (350 / 2),
+        y: (windowSize.height / 2) - 200,
+      },
       clippy: {x: 650, y: 500},
     };
     const positionsForMobile = {
       taskManager: {x: 20, y: 20},
       decidingWindow: {x: 5, y: 300},
-      acceptingWindow: {x: 15, y: 200},
+      acceptingWindow: {x: 0, y: 100},
       clippy: {x: 200, y: 500},
     };
-    const windowSize = this.measureWindowSize();
-    const isMobile = this.isMobileIsh(windowSize);
     const positions = isMobile
       ? positionsForMobile
       : positionsForDesktop;
@@ -110,10 +113,7 @@ class App extends Component {
         {offerAccepted && <AcceptingWindow
           zIndex={zIndices[2] || 999999}
           bumpZIndex={this.bumpZIndex(2)}
-          defaultPosition={{
-            x: (windowSize.width / 2) - (350 / 2),
-            y: (windowSize.height / 2) - 200,
-          }}
+          defaultPosition={positions.acceptingWindow}
           isMobile={isMobile}
         />}
         {!offerAccepted && <Clippy
