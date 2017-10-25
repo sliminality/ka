@@ -90,10 +90,11 @@ class TaskManager extends Component {
   }
 
   renderFooter() {
+    const {isMobile} = this.props;
     const items = [
       'Processes: 1',
       'CPU Usage: 99%',
-      'Mem Usage: 55556K / 47245K',
+      ...!isMobile && ['Mem Usage: 55556K / 47245K'],
     ];
 
     return (
@@ -204,6 +205,7 @@ const styles = {
   },
   footerDiv: {
     padding: 2,
+    flex: 1,
   },
   footerDivWide: {
     flex: 2,

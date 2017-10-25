@@ -71,6 +71,7 @@ class Window extends Component {
       <Draggable
         onMouseDown={bumpZIndex}
         defaultPosition={defaultPosition}
+        bounds="body"
       >
         <div
           className="outset bg-chrome"

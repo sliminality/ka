@@ -100,6 +100,7 @@ class App extends Component {
           offerAccepted={offerAccepted}
           defaultPosition={positions.taskManager}
           isMobile={isMobile}
+          style={isMobile && {width: 300}}
         />
         <DecidingWindow
           zIndex={zIndices[1] || 0}

@@ -49,6 +49,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    zIndex: 99999,
+    borderTop: 'var(--border-grey)',
   },
   startButton: {
     background: `url("${process.env.PUBLIC_URL}/icons/windows-classic.png") no-repeat left/${WINDOWS_ICON_WIDTH}px`,
